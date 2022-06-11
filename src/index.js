@@ -3,6 +3,7 @@ import { exit, getUserName } from './helpers/utils.js';
 import { greeting, printMessage } from './services/log.service.js';
 import { createInterface} from 'readline';
 import { chdir, cwd, stdin, stdout } from 'process';
+import { readUserDir } from './helpers/ls.js';
 
 const main = () => {
   try {
@@ -15,7 +16,7 @@ const main = () => {
       input: stdin,
       output: stdout,
     });
-  
+
     rl.on('line', (text) => {
       if (text === '.exit') {
         exit(rl, userName);
@@ -38,13 +39,17 @@ const main = () => {
             printMessage('Incorrect command. Try again');
           }
           break;
+
+        case 'ls':
+          readUserDir(cwd());
+          break;
       
         default:
           printMessage('Incorrect command. Try again');
           break;
       }
     });
-  
+
     rl.on('SIGINT', () => {
       exit(rl, userName);
     });
