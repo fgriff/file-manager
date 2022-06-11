@@ -1,4 +1,6 @@
 import { createReadStream, createWriteStream } from 'fs';
+import { rename } from 'fs/promises';
+import { dirname, join, sep } from 'path';
 import { printMessage } from '../services/log.service.js';
 import { isExist } from './utils.js';
 
@@ -19,8 +21,23 @@ const createNewFile = async (filePath) => {
     ws.on('error', () => console.log('Operation failed'));
     ws.end();
   } else {
-    printMessage("File already exist");
+    printMessage('File already exist');
   };
 };
 
-export { createNewFile, readUserFile };
+const renameFile = async (oldFilePath, newFileName) => {
+  if (await isExist(oldFilePath)) {
+    const dirPath = dirname(oldFilePath);
+    const newFilePath = join(dirPath, newFileName);
+
+    if (!await isExist(newFilePath)) {
+      await rename(oldFilePath, newFilePath);
+    } else {
+      printMessage(`${newFilePath.split(`${sep}`).pop()} already exist`);
+    }
+  } else {
+    printMessage(`${oldFilePath.split(`${sep}`).pop()} doesn't exist`);
+  };
+};
+
+export { createNewFile, readUserFile, renameFile };
