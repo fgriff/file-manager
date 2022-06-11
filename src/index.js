@@ -44,14 +44,17 @@ const main = () => {
 
         case 'ls':
           readUserDir(cwd());
+          printMessage(`You are currently in ${cwd()}`);
           break;
 
         case 'cat':
           readUserFile(args[0]);
+          printMessage(`You are currently in ${cwd()}`);
           break;
 
         case 'add':
           createNewFile(join(cwd(), args[0]));
+          printMessage(`You are currently in ${cwd()}`);
           break;
 
         default:
