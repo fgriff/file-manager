@@ -1,5 +1,5 @@
 import { createReadStream, createWriteStream } from 'fs';
-import { copyFile as cp, rename } from 'fs/promises';
+import { copyFile as cp, rename, rm } from 'fs/promises';
 import { dirname, join, sep } from 'path';
 import { printMessage } from '../services/log.service.js';
 import { isExist } from './utils.js';
@@ -55,4 +55,12 @@ const copyFile = async (filePath, dirPath) => {
   }
 };
 
-export { copyFile, createNewFile, readUserFile, renameFile };
+const removeFile = async (filePath) => {
+  if (await isExist(filePath)) {
+    await rm(filePath);
+  } else {
+    printMessage(`${filePath.split(`${sep}`).pop()} doesn't exist`);
+  }
+}
+
+export { copyFile, createNewFile, readUserFile, removeFile, renameFile };
