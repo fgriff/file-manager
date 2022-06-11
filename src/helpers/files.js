@@ -47,6 +47,8 @@ const copyFile = async (filePath, dirPath) => {
       const destPath = join(dirPath, fileName);
 
       await cp(filePath, destPath);
+
+      return 1;
     } else {
       printMessage("Target directory doesn't exist");
     }
@@ -55,12 +57,25 @@ const copyFile = async (filePath, dirPath) => {
   }
 };
 
+const moveFile = async (filePath, destPath) => {
+  if (await copyFile(filePath, destPath)) {
+    await removeFile(filePath);
+  };
+};
+
 const removeFile = async (filePath) => {
   if (await isExist(filePath)) {
     await rm(filePath);
   } else {
     printMessage(`${filePath.split(`${sep}`).pop()} doesn't exist`);
   }
-}
+};
 
-export { copyFile, createNewFile, readUserFile, removeFile, renameFile };
+export {
+  copyFile,
+  createNewFile,
+  moveFile,
+  readUserFile,
+  removeFile,
+  renameFile,
+};
