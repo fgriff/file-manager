@@ -1,14 +1,14 @@
+const printMessage = (message) => {
+  console.log(message);
+};
+
 const greeting = (userName) => {
-  console.log(`Welcome to the File Manager, ${userName}!`);
-  console.log(`You are currently in ${process.cwd()}`);
+  printMessage(`Welcome to the File Manager, ${userName}!`);
+  printMessage(`You are currently in ${process.cwd()}`);
 };
 
 const goodbye = (userName) => {
-  console.log(`Thank you for using File Manager, ${userName}!`);
-};
-
-const printMessage = (message) => {
-  console.log(message);
+  printMessage(`Thank you for using File Manager, ${userName}!`);
 };
 
 export { greeting, goodbye, printMessage };

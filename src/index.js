@@ -2,7 +2,7 @@ import { homedir } from 'os';
 import { exit, getUserName } from './helpers/utils.js';
 import { greeting, printMessage } from './services/log.service.js';
 import { createInterface} from 'readline';
-import { cwd, stdin, stdout } from 'process';
+import { chdir, cwd, stdin, stdout } from 'process';
 
 const main = () => {
   try {
@@ -16,17 +16,31 @@ const main = () => {
       output: stdout,
     });
   
-    rl.on('line', (command) => {
-      if (command === '.exit') {
+    rl.on('line', (text) => {
+      if (text === '.exit') {
         exit(rl, userName);
       }
 
+      let [command, ...args] = text.trim().split(' ');
+      args = args.filter((arg) => !!arg);
+
       switch (command) {
-        case value:
-          
+        case 'up':
+          chdir('..');
+          printMessage(`You are currently in ${cwd()}`);
+          break;
+
+        case 'cd':
+          if (args[0]) {
+            chdir(args[0]);
+            printMessage(`You are currently in ${cwd()}`);
+          } else {
+            printMessage('Incorrect command. Try again');
+          }
           break;
       
         default:
+          printMessage('Incorrect command. Try again');
           break;
       }
     });
