@@ -4,7 +4,8 @@ import { greeting, printMessage } from './services/log.service.js';
 import { createInterface} from 'readline';
 import { chdir, cwd, stdin, stdout } from 'process';
 import { readUserDir } from './helpers/ls.js';
-import { readUserFile } from './helpers/files.js';
+import { createNewFile, readUserFile } from './helpers/files.js';
+import { join } from 'path';
 
 const main = () => {
   try {
@@ -47,6 +48,10 @@ const main = () => {
 
         case 'cat':
           readUserFile(args[0]);
+          break;
+
+        case 'add':
+          createNewFile(join(cwd(), args[0]));
           break;
 
         default:
