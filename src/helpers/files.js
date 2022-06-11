@@ -1,5 +1,5 @@
 import { createReadStream, createWriteStream } from 'fs';
-import { rename } from 'fs/promises';
+import { copyFile as cp, rename } from 'fs/promises';
 import { dirname, join, sep } from 'path';
 import { printMessage } from '../services/log.service.js';
 import { isExist } from './utils.js';
@@ -40,4 +40,19 @@ const renameFile = async (oldFilePath, newFileName) => {
   };
 };
 
-export { createNewFile, readUserFile, renameFile };
+const copyFile = async (filePath, dirPath) => {
+  if (await isExist(filePath)) {
+    if (await isExist(dirPath)) {
+      const fileName = filePath.split(`${sep}`).pop();
+      const destPath = join(dirPath, fileName);
+
+      await cp(filePath, destPath);
+    } else {
+      printMessage("Target directory doesn't exist");
+    }
+  } else {
+    printMessage(`${filePath.split(`${sep}`).pop()} doesn't exist`);
+  }
+};
+
+export { copyFile, createNewFile, readUserFile, renameFile };

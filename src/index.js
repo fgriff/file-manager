@@ -4,7 +4,7 @@ import { greeting, printMessage } from './services/log.service.js';
 import { createInterface} from 'readline';
 import { chdir, cwd, stdin, stdout } from 'process';
 import { readUserDir } from './helpers/ls.js';
-import { createNewFile, readUserFile, renameFile } from './helpers/files.js';
+import { copyFile, createNewFile, readUserFile, renameFile } from './helpers/files.js';
 import { join } from 'path';
 
 const main = () => {
@@ -59,6 +59,11 @@ const main = () => {
 
         case 'rn':
           renameFile(args[0], args[1]);
+          printMessage(`You are currently in ${cwd()}`);
+          break;
+
+        case 'cp':
+          copyFile(args[0], args[1]);
           printMessage(`You are currently in ${cwd()}`);
           break;
 
