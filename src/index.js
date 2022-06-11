@@ -4,6 +4,7 @@ import { greeting, printMessage } from './services/log.service.js';
 import { createInterface} from 'readline';
 import { chdir, cwd, stdin, stdout } from 'process';
 import { readUserDir } from './helpers/ls.js';
+import { readUserFile } from './helpers/files.js';
 
 const main = () => {
   try {
@@ -43,7 +44,11 @@ const main = () => {
         case 'ls':
           readUserDir(cwd());
           break;
-      
+
+        case 'cat':
+          readUserFile(args[0]);
+          break;
+
         default:
           printMessage('Incorrect command. Try again');
           break;

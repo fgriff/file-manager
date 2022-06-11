@@ -1,4 +1,5 @@
 import { goodbye } from '../services/log.service.js';
+import { stat } from 'fs/promises';
 
 const getUserName = (args) => {
   const rest = args.slice(2);
@@ -13,6 +14,15 @@ const getUserName = (args) => {
 const exit = (readline, userName) => {
   readline.close();
   goodbye(userName);
-}
+};
 
-export { getUserName, exit };
+const isExist = async (path) => {
+  try {
+    await stat(path);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+export { getUserName, exit, isExist };
