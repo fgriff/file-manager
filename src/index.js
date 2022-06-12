@@ -14,6 +14,7 @@ import {
 } from './helpers/files.js';
 import { join } from 'path';
 import { getOsInfo } from './helpers/os.js';
+import { getHash } from './helpers/hash.js';
 
 const main = () => {
   try {
@@ -85,6 +86,10 @@ const main = () => {
         case 'os':
           getOsInfo(args[0]);
           printMessage(`You are currently in ${cwd()}`);
+          break;
+
+        case 'hash':
+          getHash(args[0]);
           break;
 
         case '.exit':
