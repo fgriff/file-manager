@@ -5,13 +5,13 @@ import { extname, join, sep } from 'path';
 import { pipeline } from 'stream/promises';
 import { printMessage } from '../services/log.service.js';
 
-const compress  = async (initFilePath, destFilePath) => {
+const compress  = async (initFilePath, destDirPath) => {
   if (await isExist(initFilePath)) {
-    if (await isExist(destFilePath)) {
+    if (await isExist(destDirPath)) {
       const fullFileName = initFilePath.split(`${sep}`).pop();
       const fileExt = extname(fullFileName);
       const targetFileName = fullFileName.replace(fileExt, '');
-      const targetFilePath = join(destFilePath, `${targetFileName}${fileExt}.br`);
+      const targetFilePath = join(destDirPath, `${targetFileName}${fileExt}.br`);
 
       try {
         const rs = createReadStream(initFilePath);
