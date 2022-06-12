@@ -1,0 +1,25 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "cli file manager",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fgriff/file-manager.git"
+  },
+  "keywords": [
+    "cli",
+    "file",
+    "manager"
+  ],
+  "author": "fgriff",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fgriff/file-manager/issues"
+  },
+  "homepage": "https://github.com/fgriff/file-manager#readme"
+}
