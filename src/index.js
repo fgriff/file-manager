@@ -1,18 +1,9 @@
-import { homedir } from 'os';
 import { exit, getUserName } from './helpers/utils.js';
 import { greeting, printMessage } from './services/log.service.js';
 import { createInterface} from 'readline';
 import { chdir, cwd, stdin, stdout } from 'process';
 import { readUserDir } from './helpers/ls.js';
-import {
-  copyFile,
-  createNewFile,
-  moveFile,
-  readUserFile,
-  removeFile,
-  renameFile,
-} from './helpers/files.js';
-import { join } from 'path';
+import { fileSystem } from './helpers/files.js';
 import { getOsInfo } from './helpers/os.js';
 import { getHash } from './helpers/hash.js';
 import { compress } from './helpers/compress.js';
@@ -20,8 +11,6 @@ import { decompress } from './helpers/decompress.js';
 
 const main = () => {
   try {
-    const currentWorkDir = cwd();
-    const homeUserDir = homedir();
     const userName = getUserName(process.argv);
     greeting(userName);
 
@@ -55,34 +44,12 @@ const main = () => {
           break;
 
         case 'cat':
-          readUserFile(args[0]);
-          printMessage(`You are currently in ${cwd()}`);
-          break;
-
         case 'add':
-          createNewFile(join(cwd(), args[0]));
-          printMessage(`You are currently in ${cwd()}`);
-          break;
-
         case 'rn':
-          renameFile(args[0], args[1]);
-          printMessage(`You are currently in ${cwd()}`);
-          break;
-
         case 'cp':
-          copyFile(args[0], args[1]);
-          printMessage(`You are currently in ${cwd()}`);
-          break;
-
         case 'mv':
-          moveFile(args[0], args[1]).then(() => {
-            printMessage(`You are currently in ${cwd()}`);
-          });
-          break;
-
         case 'rm':
-          removeFile(args[0]);
-          printMessage(`You are currently in ${cwd()}`);
+          fileSystem.dispatch(command, args[0], args[1]);
           break;
 
         case 'os':
