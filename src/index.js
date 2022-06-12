@@ -16,6 +16,7 @@ import { join } from 'path';
 import { getOsInfo } from './helpers/os.js';
 import { getHash } from './helpers/hash.js';
 import { compress } from './helpers/compress.js';
+import { decompress } from './helpers/decompress.js';
 
 const main = () => {
   try {
@@ -95,6 +96,10 @@ const main = () => {
 
         case 'compress':
           compress(args[0], args[1]);
+          break;
+
+        case 'decompress':
+          decompress(args[0], args[1]);
           break;
 
         case '.exit':
