@@ -30,38 +30,22 @@ const fileSystem = {
   },
 
   async rn(filePath, destPath) {
-    if (await isExist(filePath)) {
+    try {
       const dirPath = dirname(filePath);
       const newFilePath = join(dirPath, destPath);
-  
-      if (!await isExist(newFilePath)) {
-        await rename(filePath, newFilePath);
-      } else {
-        printMessage(`${newFilePath.split(`${sep}`).pop()} already exist`);
-      }
-    } else {
-      printMessage(`${filePath.split(`${sep}`).pop()} doesn't exist`);
-    };
+      await rename(filePath, newFilePath);
+    } catch (e) {
+      printMessage('Operation failed');
+    }
   },
 
   async cp(filePath, destPath) {
-    if (await isExist(filePath)) {
-      if (await isExist(destPath)) {
-        const fileName = filePath.split(`${sep}`).pop();
-        const fullDestPath = join(destPath, fileName);
-  
-        if (!await isExist(fullDestPath)) {
-          await cp(filePath, fullDestPath);
-
-          return 1;
-        } else {
-          printMessage("This file already exist");
-        }
-      } else {
-        printMessage("Target directory doesn't exist");
-      }
-    } else {
-      printMessage(`${filePath.split(`${sep}`).pop()} doesn't exist`);
+    try {
+      const fileName = filePath.split(`${sep}`).pop();
+      const fullDestPath = join(destPath, fileName);
+      await cp(filePath, fullDestPath);
+    } catch (e) {
+      printMessage('Operation failed');
     }
   },
 
@@ -72,10 +56,10 @@ const fileSystem = {
   },
 
   async rm(filePath) {
-    if (await isExist(filePath)) {
+    try {
       await rm(filePath);
-    } else {
-      printMessage(`${filePath.split(`${sep}`).pop()} doesn't exist`);
+    } catch (e) {
+      printMessage('Operation failed');
     }
   },
 
@@ -83,6 +67,6 @@ const fileSystem = {
     await this[command](filePath, destPath);
     printMessage(`You are currently in ${cwd()}`);
   }
-}
+};
 
 export { fileSystem };
