@@ -50,9 +50,8 @@ const fileSystem = {
   },
 
   async mv(filePath, destPath) {
-    if (await this.cp(filePath, destPath)) {
-      await this.rm(filePath);
-    };
+    await this.cp(filePath, destPath);
+    await this.rm(filePath);
   },
 
   async rm(filePath) {
