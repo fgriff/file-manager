@@ -50,8 +50,18 @@ const fileSystem = {
   },
 
   async mv(filePath, destPath) {
-    await this.cp(filePath, destPath);
-    await this.rm(filePath);
+    const pathFrom = dirname(filePath);
+    const pathTo = destPath[destPath.length - 1] === `${sep}` ? destPath.substr(0, destPath.length - 1) : destPath;
+    const condition = (pathFrom === pathTo) && await isExist(filePath);
+
+    if (!condition) {
+      try {
+        await this.cp(filePath, destPath);
+        await this.rm(filePath);
+      } catch (e) {}
+    } else {
+      printMessage('You are trying to move the file to the same location');
+    }
   },
 
   async rm(filePath) {
