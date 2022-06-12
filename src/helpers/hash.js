@@ -3,6 +3,7 @@ import { createHash } from 'crypto';
 import { createReadStream } from 'fs';
 import { printMessage } from '../services/log.service.js';
 import { cwd } from 'process';
+import { sep } from 'path';
 
 const getHash = async (filePath) => {
   if (await isExist(filePath)) {
