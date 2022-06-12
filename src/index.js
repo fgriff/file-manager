@@ -1,8 +1,8 @@
 import { exit, getUserName } from './helpers/utils.js';
 import { greeting, printMessage } from './services/log.service.js';
 import { createInterface} from 'readline';
-import { chdir, cwd, stdin, stdout } from 'process';
-import { readUserDir } from './helpers/ls.js';
+import { cwd, stdin, stdout } from 'process';
+import { nav } from './helpers/nwd.js';
 import { fileSystem } from './helpers/files.js';
 import { getOsInfo } from './helpers/os.js';
 import { getHash } from './helpers/hash.js';
@@ -25,22 +25,9 @@ const main = () => {
 
       switch (command) {
         case 'up':
-          chdir('..');
-          printMessage(`You are currently in ${cwd()}`);
-          break;
-
         case 'cd':
-          if (args[0]) {
-            chdir(args[0]);
-            printMessage(`You are currently in ${cwd()}`);
-          } else {
-            printMessage('Incorrect command. Try again');
-          }
-          break;
-
         case 'ls':
-          readUserDir(cwd());
-          printMessage(`You are currently in ${cwd()}`);
+          nav.dispatch(command, args[0]);
           break;
 
         case 'cat':
