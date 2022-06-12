@@ -27,10 +27,6 @@ const main = () => {
     });
 
     rl.on('line', (text) => {
-      if (text === '.exit') {
-        exit(rl, userName);
-      }
-
       let [command, ...args] = text.trim().split(' ');
       args = args.filter((arg) => !!arg);
 
@@ -83,6 +79,10 @@ const main = () => {
         case 'rm':
           removeFile(args[0]);
           printMessage(`You are currently in ${cwd()}`);
+          break;
+
+        case '.exit':
+          exit(rl, userName);
           break;
 
         default:
